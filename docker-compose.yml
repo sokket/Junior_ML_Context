@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  backend:
+    build: backend/
+    image: sie_service
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app
+  frontend:
+    build: frontend/
+    image: sie_frontend
+    volumes:
+      - ./frontend:/app
+  web-proxy:
+    build: nginx/
+    ports:
+      - 4431:443
+      - 8001:80
+    depends_on:
+      - backend
+      - frontend
+
+
+ 
